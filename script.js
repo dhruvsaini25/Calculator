@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let operator = '';
     let operand1 = '';
     let operand2 = '';
+    eqButtonOFF();
 
     // Function to update display
     function updateDisplay(value) {
@@ -29,11 +30,16 @@ document.addEventListener('DOMContentLoaded', function () {
             } else if (!isNaN(value) || value === '.') {
                 currentInput += value;
                 updateDisplay(currentInput);
+                if (operator) {
+                    operand2=currentInput;
+                    eqButtonON();
+                }
             } else if (['+', '-', '*', '/'].includes(value)) {
                 if (currentInput) {
                     operand1 = currentInput;
                     operator = value;
                     currentInput = '';
+                    eqButtonOFF();
                 }
             }
         });
@@ -43,11 +49,16 @@ document.addEventListener('DOMContentLoaded', function () {
     equalButton.addEventListener('click', function () {
         operand2 = currentInput;
         console.log("Operands and operator: ", operand1, operand2, operator);  // Debugging output
+        eqButtonOFF();
+        
 
         let result = '';
+        
         if (operand1 && operand2 && operator) {
+
             switch (operator) {
                 case '+':
+                    
                     result = parseFloat(operand1) + parseFloat(operand2);
                     break;
                 case '-':
@@ -69,10 +80,11 @@ document.addEventListener('DOMContentLoaded', function () {
             operator = '';
             operand1 = '';
             operand2 = '';
+
         }
     });
 
-    //clear button
+    //allclear button
     clearButton.addEventListener('click', function () {
         console.log("Clear button clicked");  // Debugging output
         currentInput = '';
@@ -84,19 +96,34 @@ document.addEventListener('DOMContentLoaded', function () {
 
     //delete button
     deleteButton.addEventListener('click', function () {
-        console.log("Delete button clicked");  // Debugging output
+        console.log("Delete button clicked");
         if (currentInput.length > 0) {
-            currentInput = currentInput.slice(0, -1);
+            currentInput = currentInput.slice(0, -5);
             updateDisplay(currentInput);
         }
     });
 
     //percentage button
     percentageButton.addEventListener('click', function () {
-        console.log("Percentage button clicked");  // Debugging output
+        console.log("Percentage button clicked");
         if (currentInput) {
-            currentInput = (parseFloat(currentInput) / 100).toString();
+            currentInput = (parseFloat(currentInput) / 100).toFixed(15);
             updateDisplay(currentInput);
         }
     });
+
+    // EQUALS BUTTON ON
+    function eqButtonON() {
+        equalButton.disabled = false;
+    }
+    // EQUALS BUTTON OFF
+    function eqButtonOFF() {
+        equalButton.disabled = true;
+    }
+    
+
+
+
+
+    
 });

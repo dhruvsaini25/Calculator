@@ -34,6 +34,11 @@ body {
     grid-template-columns: repeat(4, 1fr);
     gap: 10px;
 }
+.btn.equal:disabled {
+    background-color: #ea0000; /* Gray */
+    color: #f30808; /* Darker gray */
+    cursor: not-allowed; /* Change cursor to indicate the button is disabled */
+}
 .btn {
     padding: 20px;
     font-size: 24px;
