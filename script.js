@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let operand2 = '';
     let isNegativeAllowed = true;
     eqButtonOFF();
-    // minButtonON();
+    minButtonON();
     // opButtonsOFF();
 
     // Function to update display
@@ -94,28 +94,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 operand1 = operand2 !== 0 ? operand1 / operand2 : 'Error';
                 break;
         }
-        // if (operand1 && operand2 && operator) {
-
-        //     switch (operator) {
-        //         case '+':
-                    
-        //             operand1 = parseFloat(operand1) + parseFloat(operand2);
-        //             break;
-        //         case '-':
-        //             operand1 = parseFloat(operand1) - parseFloat(operand2);
-        //             break;
-        //         case '*':
-        //             operand1 = parseFloat(operand1) * parseFloat(operand2);
-        //             break;
-        //         case '/':
-        //             if (operand2 !== '0') {
-        //                 operand1 = parseFloat(operand1) / parseFloat(operand2);
-        //             } else {
-        //                 operand1 = 'Error';
-        //             }
-        //             break;
-        //     }
-        // }
         operand2='';
         updateDisplay(operand1);
     }
