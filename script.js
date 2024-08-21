@@ -5,12 +5,20 @@ document.addEventListener('DOMContentLoaded', function () {
     const deleteButton = document.getElementById('del');
     const equalButton = document.getElementById('equal');
     const percentageButton = document.getElementById('percentage');
+    const minButton = document.querySelectorAll('btnminus');
+    const opButtons = document.getElementById('btn operators');
+    const periodButtons = document.getElementById('btnperiod');
+
+
 
     let currentInput = '';
     let operator = '';
     let operand1 = '';
     let operand2 = '';
+    let isNegativeAllowed = true;
     eqButtonOFF();
+    // minButtonON();
+    // opButtonsOFF();
 
     // Function to update display
     function updateDisplay(value) {
@@ -30,59 +38,87 @@ document.addEventListener('DOMContentLoaded', function () {
             } else if (!isNaN(value) || value === '.') {
                 currentInput += value;
                 updateDisplay(currentInput);
-                if (operator) {
+                if (!operator) {
+                    operand1=currentInput;
+                } else {
                     operand2=currentInput;
                     eqButtonON();
                 }
+                isNegativeAllowed=false; //disable negative sign input after number
+            } else if (value === '-' && isNegativeAllowed) {
+                currentInput += value;
+                updateDisplay(currentInput);
+                isNegativeAllowed = false; //disable consecutive negative signs
+                
             } else if (['+', '-', '*', '/'].includes(value)) {
+                if (operand1 && operand2 && operator) {
+                    performOperation();
+
+                }
+
                 if (currentInput) {
-                    operand1 = currentInput;
                     operator = value;
                     currentInput = '';
                     eqButtonOFF();
+                    isNegativeAllowed=true; //allow negative number after operator
+                    console.log(operator);
                 }
+                
             }
         });
     });
 
     //equal button
     equalButton.addEventListener('click', function () {
-        operand2 = currentInput;
-        console.log("Operands and operator: ", operand1, operand2, operator);  // Debugging output
-        eqButtonOFF();
-        
-
-        let result = '';
-        
+        // operand2 = currentInput;
         if (operand1 && operand2 && operator) {
-
-            switch (operator) {
-                case '+':
-                    
-                    result = parseFloat(operand1) + parseFloat(operand2);
-                    break;
-                case '-':
-                    result = parseFloat(operand1) - parseFloat(operand2);
-                    break;
-                case '*':
-                    result = parseFloat(operand1) * parseFloat(operand2);
-                    break;
-                case '/':
-                    if (operand2 !== '0') {
-                        result = parseFloat(operand1) / parseFloat(operand2);
-                    } else {
-                        result = 'Error';
-                    }
-                    break;
-            }
-            updateDisplay(result);
-            currentInput = result.toString(); // Update currentInput with the result for further calculations
-            operator = '';
-            operand1 = '';
-            operand2 = '';
-
+            performOperation();
+            eqButtonOFF();
         }
     });
+    function performOperation() {
+        operand1=parseFloat(operand1);
+        operand2=parseFloat(operand2);
+
+        switch (operator) {
+            case '+':
+                operand1 += operand2;
+                break;
+            case '-':
+                operand1 -= operand2;
+                break;
+            case '*':
+                operand1 *= operand2;
+                break;
+            case '/':
+                operand1 = operand2 !== 0 ? operand1 / operand2 : 'Error';
+                break;
+        }
+        // if (operand1 && operand2 && operator) {
+
+        //     switch (operator) {
+        //         case '+':
+                    
+        //             operand1 = parseFloat(operand1) + parseFloat(operand2);
+        //             break;
+        //         case '-':
+        //             operand1 = parseFloat(operand1) - parseFloat(operand2);
+        //             break;
+        //         case '*':
+        //             operand1 = parseFloat(operand1) * parseFloat(operand2);
+        //             break;
+        //         case '/':
+        //             if (operand2 !== '0') {
+        //                 operand1 = parseFloat(operand1) / parseFloat(operand2);
+        //             } else {
+        //                 operand1 = 'Error';
+        //             }
+        //             break;
+        //     }
+        // }
+        operand2='';
+        updateDisplay(operand1);
+    }
 
     //allclear button
     clearButton.addEventListener('click', function () {
@@ -92,6 +128,7 @@ document.addEventListener('DOMContentLoaded', function () {
         operand1 = '';
         operand2 = '';
         updateDisplay('');
+        isNegativeAllowed = true;
     });
 
     //delete button
@@ -120,9 +157,36 @@ document.addEventListener('DOMContentLoaded', function () {
     function eqButtonOFF() {
         equalButton.disabled = true;
     }
+    // MINUS BUTTON ON
+    function minButtonON() {
+        minButton.disabled = false;
+    };
+
+    // MINUS BUTTON OFF
+    function minButtonOFF() {
+        minButton.disabled = true;
+        };
     
+    //PERIOD BUTTON ON
+    function periodButtonON() {
+        periodButton.disabled = false;
+        };
 
-
+    //PERIOD BUTTON OFF
+    function periodButtonOFF() {
+        periodButton.disabled = true;
+        };
+    
+    // OPERATION BUTTONS ON
+    function opButtonsON() {
+        opButtons.disabled = false;
+        };
+    
+    //OPERATION BUTTONS OFF
+    function opButtonsOFF() {
+        opButtons.disabled = true;
+        };
+    
 
 
     
