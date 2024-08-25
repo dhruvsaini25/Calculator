@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let isNegativeAllowed = true;
     eqButtonOFF();
     minButtonON();
+    percentageButtonOFF();
     // opButtonsOFF();
 
     // Function to update display
@@ -35,14 +36,17 @@ document.addEventListener('DOMContentLoaded', function () {
             if (value === 'pi') {
                 currentInput += Math.PI.toFixed(2);
                 updateDisplay(currentInput);
+                percentageButtonON();
             } else if (!isNaN(value) || value === '.') {
                 currentInput += value;
                 updateDisplay(currentInput);
                 if (!operator) {
                     operand1=currentInput;
+                    percentageButtonON();
                 } else {
                     operand2=currentInput;
                     eqButtonON();
+                    percentageButtonON();
                 }
                 isNegativeAllowed=false; //disable negative sign input after number
             } else if (value === '-' && isNegativeAllowed) {
@@ -60,6 +64,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     operator = value;
                     currentInput = '';
                     eqButtonOFF();
+                    delButtonOFF();
                     isNegativeAllowed=true; //allow negative number after operator
                     console.log(operator);
                 }
@@ -135,6 +140,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function eqButtonOFF() {
         equalButton.disabled = true;
     }
+
     // MINUS BUTTON ON
     function minButtonON() {
         minButton.disabled = false;
@@ -143,28 +149,48 @@ document.addEventListener('DOMContentLoaded', function () {
     // MINUS BUTTON OFF
     function minButtonOFF() {
         minButton.disabled = true;
-        };
-    
+    };
+
     //PERIOD BUTTON ON
     function periodButtonON() {
         periodButton.disabled = false;
-        };
+    };
 
     //PERIOD BUTTON OFF
     function periodButtonOFF() {
         periodButton.disabled = true;
-        };
+    };
     
     // OPERATION BUTTONS ON
     function opButtonsON() {
         opButtons.disabled = false;
-        };
+    };
     
     //OPERATION BUTTONS OFF
     function opButtonsOFF() {
         opButtons.disabled = true;
-        };
+    };
     
+    // DELETE BUTTON ON
+    function delButtonON() {
+        deleteButton.disabled = false;
+    };
+    
+    //DELETE BUTTON OFF
+    function delButtonOFF() {
+        deleteButton.disabled = true;
+    };
+    
+    //PERCENTAGE BUTTON ON
+    function percentageButtonON() {
+        percentageButton.disabled = false;
+    };
+    
+    //PERCENTAGE BUTTON OFF
+    function percentageButtonOFF() {
+        percentageButton.disabled = true;
+    };
+        
 
 
     
