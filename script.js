@@ -39,15 +39,25 @@ document.addEventListener('DOMContentLoaded', function () {
             if (value === 'pi') {
                 // currentInput += Math.PI.toFixed(2);
                 const piValue = Math.PI.toFixed(2); // Use pi as a number
+                if (currentInput) {
+                    currentInput=(parseFloat(currentInput) * Math.PI).toFixed(2);
+                    operand1=currentInput;
+                } else{
+                    operand1=piValue;
+                    currentInput=operand1;
+                }
                 if (!operator) {
                     operand1 = piValue;
                 } else {
                     operand2 = piValue;
                 }
-                currentInput += piValue;
+                // currentInput += piValue;
+                operand1=currentInput;
                 updateDisplay(currentInput);
                 percentageButtonON();
                 periodButtonOFF();
+                isNegativeAllowed=true;
+                eqButtonON();
             } /*else if (!isNaN(value) || value === '.') {
                 currentInput += value;
                 updateDisplay(currentInput);*/
@@ -57,8 +67,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     return;  // Do not allow another period if one is already present
                 }
                     
-                    currentInput += value;
-                    updateDisplay(currentInput);    
+                currentInput += value;
+                updateDisplay(currentInput);
                 if (!operator) {
                     operand1=currentInput;
                     percentageButtonON();
@@ -75,12 +85,29 @@ document.addEventListener('DOMContentLoaded', function () {
                     percentageButtonON();
                 }
                 isNegativeAllowed=false; //disable negative sign input after number
-            } else if (value === '-' && isNegativeAllowed) {
+            }else if (value === '-' && isNegativeAllowed) {
+                if (!operator && !operand1) {
+                    currentInput += value;
+                    updateDisplay(currentInput);
+                } else {
+                    // Handle cases where minus should be treated as subtraction operator
+                    if (currentInput && operand1) {
+                        operator = value;
+                        currentInput = '';
+                        eqButtonOFF();
+                        delButtonOFF();
+                        isNegativeAllowed = true;
+                        console.log(operator);
+                    }
+                }
+            } /*else if (value === '-' && isNegativeAllowed) {
                 currentInput += value;
                 updateDisplay(currentInput);
                 isNegativeAllowed = false; //disable consecutive negative signs
                 
-            } else if (['+', '-', '*', '/'].includes(value)) {
+            }*/
+        
+            else if (['+', '-', '*', '/'].includes(value)) {
                 if (operand1 && operand2 && operator) {
                     performOperation();
 
