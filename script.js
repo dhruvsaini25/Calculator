@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const percentageButton = document.getElementById('percentage');
     const minButton = document.querySelectorAll('btnminus');
     const opButtons = document.getElementById('btn operators');
-    const periodButtons = document.getElementById('btnperiod');
+    const periodButton = document.getElementById('btnperiod');
 
 
 
@@ -19,6 +19,9 @@ document.addEventListener('DOMContentLoaded', function () {
     eqButtonOFF();
     minButtonON();
     percentageButtonOFF();
+    clearButtonOFF();
+    delButtonOFF();
+    
     // opButtonsOFF();
 
     // Function to update display
@@ -34,17 +37,40 @@ document.addEventListener('DOMContentLoaded', function () {
             console.log("Button clicked: ", value);  // Debugging output
 
             if (value === 'pi') {
-                currentInput += Math.PI.toFixed(2);
+                // currentInput += Math.PI.toFixed(2);
+                const piValue = Math.PI.toFixed(2); // Use pi as a number
+                if (!operator) {
+                    operand1 = piValue;
+                } else {
+                    operand2 = piValue;
+                }
+                currentInput += piValue;
                 updateDisplay(currentInput);
                 percentageButtonON();
-            } else if (!isNaN(value) || value === '.') {
+                periodButtonOFF();
+            } /*else if (!isNaN(value) || value === '.') {
                 currentInput += value;
-                updateDisplay(currentInput);
+                updateDisplay(currentInput);*/
+            else if (!isNaN(value) || value === '.') {
+                    // Check for consecutive periods
+                if (value === '.' && currentInput.includes('.')) {
+                    return;  // Do not allow another period if one is already present
+                }
+                    
+                    currentInput += value;
+                    updateDisplay(currentInput);    
                 if (!operator) {
                     operand1=currentInput;
                     percentageButtonON();
-                } else {
+                } /*else {
                     operand2=currentInput;
+                    eqButtonON();
+                    percentageButtonON();
+                }*/
+                else {
+                    operand2 += value;  // Add the number to operand2
+                    currentInput = operand1 + ` ${operator} ` + operand2;  // Concatenate operand1, operator, and operand2
+                    updateDisplay(currentInput);  // Update display to show the entire expression
                     eqButtonON();
                     percentageButtonON();
                 }
@@ -68,7 +94,15 @@ document.addEventListener('DOMContentLoaded', function () {
                     isNegativeAllowed=true; //allow negative number after operator
                     console.log(operator);
                 }
-                
+                // if (currentInput) {
+                //     operator = value;  // Set the current operator
+                //     operand1 = currentInput;  // Store the first operand
+                //     currentInput += ` ${value} `;  // Add the operator to current input with spaces for readability
+                //     updateDisplay(currentInput);  // Update display with the operator
+                //     currentInput = '';  // Reset currentInput for the next number (operand2)
+                //     eqButtonOFF();  // Disable equal button until operand2 is entered
+                //     isNegativeAllowed = true;  // Allow negative number after operator
+                // }
             }
         });
     });
@@ -99,6 +133,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 operand1 = operand2 !== 0 ? operand1 / operand2 : 'Error';
                 break;
         }
+        if (typeof operand1==='number') {
+            operand1=parseFloat(operand1.toFixed(10));
+        }
         operand2='';
         updateDisplay(operand1);
     }
@@ -114,7 +151,7 @@ document.addEventListener('DOMContentLoaded', function () {
         isNegativeAllowed = true;
     });
 
-    //delete button
+    delete button
     deleteButton.addEventListener('click', function () {
         console.log("Delete button clicked");
         if (currentInput.length > 0) {
@@ -127,8 +164,12 @@ document.addEventListener('DOMContentLoaded', function () {
     percentageButton.addEventListener('click', function () {
         console.log("Percentage button clicked");
         if (currentInput) {
-            currentInput = (parseFloat(currentInput) / 100).toFixed(15);
-            updateDisplay(currentInput);
+            // currentInput = (parseFloat(currentInput) / 100).toFixed(15);
+            // updateDisplay(currentInput);
+            let percentageValue = parseFloat(currentInput) / 100;
+        percentageValue = parseFloat(percentageValue.toFixed(10));  // Limit to 10 decimal places, then remove trailing zeroes
+        updateDisplay(percentageValue);
+        currentInput = percentageValue.toString();  // Update currentInput to match the formatted value
         }
     });
 
@@ -189,6 +230,16 @@ document.addEventListener('DOMContentLoaded', function () {
     //PERCENTAGE BUTTON OFF
     function percentageButtonOFF() {
         percentageButton.disabled = true;
+    };
+    
+    //CLEAR BUTTON ON
+    function clearButtonON() {
+        clearButton.disabled = false;
+    };
+    
+    //CLEAR BUTTON OFF
+    function clearButtonOFF() {
+        clearButton.disabled = true;
     };
         
 
