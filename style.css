@@ -78,7 +78,7 @@ body {
     background-image: linear-gradient(to bottom, #000000,  #8532b5);
     /* background-image: linear-gradient(to right, #ff7e5f, #feb47b); */
     border: none;
-    color: white;
+    /* color: #1ddcdc; */
     padding: 10px 20px;
     text-align: center;
     text-decoration: none;
@@ -94,22 +94,37 @@ body {
     /* background-color: #ff4500; */
     /* background-image: linear-gradient(to top, #8532b5, #bc4afd); */
     background-color:  #1ddcdc;
+    
 
 }
 
 
 .btn.ac {
     /* grid-column: span 1; */
-    background-image: linear-gradient(to bottom, #000000,  #8532b5);
+    /* background-image: linear-gradient(to bottom, #000000,  #8532b5); */
     /* background-color: #d9534f; */
-    
+    color: #1ddcdc;
 }
 
 .btn.del {
-    background-image: linear-gradient(to bottom, #ea83ed,  #1ddcdc);
+    /* background-image: linear-gradient(to bottom, #ea83ed,  #1ddcdc); */
+    color: #1ddcdc;
 }
 
 
 .btn.percentage {
-    background-color:  #1ddcdc;
+    /* background-color:  #1ddcdc; */
+    color: #1ddcdc;
+}
+#btndivide {
+    color: #1ddcdc;
+}
+#btnmultiply {
+    color: #1ddcdc;
+}
+#btnminus {
+    color: #1ddcdc;
+}
+#btnplus {
+    color: #1ddcdc;
 }
