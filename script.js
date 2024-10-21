@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function () {
     minButtonON();
     percentageButtonOFF();
     delButtonOFF();
-    
+    clearButtonOFF();
     // opButtonsOFF();
 
     // Function to update display
