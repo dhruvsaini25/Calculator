@@ -19,7 +19,6 @@ document.addEventListener('DOMContentLoaded', function () {
     eqButtonOFF();
     minButtonON();
     percentageButtonOFF();
-    clearButtonOFF();
     delButtonOFF();
     
     // opButtonsOFF();
